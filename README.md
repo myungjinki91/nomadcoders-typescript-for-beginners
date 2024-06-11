@@ -229,3 +229,40 @@ const add: Add = (a, b, c?: number) => {
 ```
 
 자주보는 상황은 아닐겁니다.
+
+## 3.2 Polymorphism
+
+아래의 경우 `(arr: string[]): void`를 또 추가해줘야 할까요?
+
+```tsx
+type SuperPrint = {
+    (arr: number[]): void
+    (arr: boolean[]): void
+}
+
+const superPrint: SuperPrint = (arr) => {
+    arr.forEach(i => console.log(i))
+}
+
+superPrint([1, 2, 3, 4])
+superPrint([true, false, true])
+superPrint(["a", "b", "c"])
+```
+
+이제 배워야 할 것은 Generic입니다. 모든 경우의 call signature를 다 사용할 필요가 없어졌습니다.
+
+```tsx
+type SuperPrint = {
+    <T>(arr: T[]): void
+}
+
+const superPrint: SuperPrint = (arr) => {
+    arr.forEach(i => console.log(i))
+}
+
+superPrint([1, 2, 3, 4])
+superPrint([true, false, true])
+superPrint(["a", "b", "c"])
+```
+
+Generic이 Polymorphism을 지원하기 위해 만들어졌습니다.
