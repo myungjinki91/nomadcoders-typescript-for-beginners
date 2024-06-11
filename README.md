@@ -80,3 +80,33 @@ function playerMaker(name: string): Player {
 const nico = playerMaker("nico")
 
 ```
+
+## 2.3 Types of TS part Two
+
+Readonly
+
+```tsx
+type Player = {
+    readonly name: string,
+    age?: number,
+}
+
+const playerMaker = (name: string): Player => ({name});
+const nico = playerMaker("nico")
+nico.name = ""
+```
+
+```tsx
+const numbers: readonly number[] = [1, 2, 3, 4]
+numbers.push(1)
+```
+
+Tuple도 있습니다. Tuple의 장점은 Array의 개수를 정할 수 있고, 특정 타입도 정할 수 있어서 API의 응답이 아래와 같이 올 경우 용이합니다.
+
+```tsx
+const player: [string, number, boolean] = ["nico", 12, true]
+```
+
+다른 타입도 있습니다. `undefined`, `null` 도 있습니다. `?`는 전에도 말했듯이 `undefined |` 를 줄인 것입니다.
+
+any도 있습니다. TypeScript이 조이는 숨통을 잠시 벗어나는 키워드입니다. 사용법은 사용하지 않는 것입니다.
