@@ -110,3 +110,49 @@ const player: [string, number, boolean] = ["nico", 12, true]
 다른 타입도 있습니다. `undefined`, `null` 도 있습니다. `?`는 전에도 말했듯이 `undefined |` 를 줄인 것입니다.
 
 any도 있습니다. TypeScript이 조이는 숨통을 잠시 벗어나는 키워드입니다. 사용법은 사용하지 않는 것입니다.
+
+## 2.4 Types of TS part Three
+
+이번에 알아볼 Type은 JavaScript에는 없고 TypeScrip에만 존재하는 Type입니다. void ,never, unknown을 알아봅시다.
+
+unknown은 아직 Type을 알지 못할 때 사용합니다.
+
+```tsx
+let a: unknown;
+
+if (typeof a === 'number') {
+    let b = a + 1
+}
+if (typeof a === 'string') {
+    let b = a.toUpperCase();
+}
+
+```
+
+void는 C와 같이 function의 return이 없을 때 사용합니다.
+
+```tsx
+function hello() {
+    console.log('x')
+}
+const a = hello();
+a.toUpperCase();
+```
+
+never는 절대 발생하지 않는 경우의 type입니다.
+
+```tsx
+function hello(): never {
+    throw new Error("xxx")
+}
+
+function hi(name: string | number) {
+    if (typeof name === "string") {
+        name // string
+    } else if (typeof name === "number") {
+        name // number
+    } else {
+        name // never
+    }
+}
+```
