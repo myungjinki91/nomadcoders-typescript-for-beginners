@@ -156,3 +156,24 @@ function hi(name: string | number) {
     }
 }
 ```
+
+# 3 FUNCTIONS
+
+## 3.0 Call Signatures
+
+Arrow function을 사용하려고 합니다. 
+
+```tsx
+// const add: (a: number, b: number) => number
+const add = (a: number, b: number) => a + b
+```
+
+아래와 같이 더 깔끔하게 만들 수 있습니다.
+
+```tsx
+type Add = (a: number, b: number) => number;
+
+const add: Add = (a, b) => a + b
+```
+
+`(a: number, b: number) => number` 꼴을 `call signatures`라고 부릅니다.
