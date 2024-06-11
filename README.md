@@ -32,3 +32,51 @@ let b : boolean = false
 ```tsx
 let c : number[] = []
 ```
+
+## 2.2 Types of TS part One
+
+?를 사용해 Optional로 Type을 지정할 수 있습니다.
+
+```
+const player : {
+    name: string,
+    age?: number,
+} = {
+    name: "",
+}
+
+if (player.age < 10) {
+
+}
+```
+
+Alias도 가능합니다.
+
+```tsx
+type Player = {
+    name: string,
+    age?: number,
+}
+
+const nico : Player = {
+    name: "",
+}
+
+const lynn : Player = {
+    name: "lynn",
+    age: 12
+}
+```
+
+함수도 가능합니다.
+
+```tsx
+function playerMaker(name: string): Player {
+    return {
+        name
+    }
+}
+
+const nico = playerMaker("nico")
+
+```
