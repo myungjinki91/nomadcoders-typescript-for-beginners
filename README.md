@@ -177,3 +177,55 @@ const add: Add = (a, b) => a + b
 ```
 
 `(a: number, b: number) => number` 꼴을 `call signatures`라고 부릅니다.
+
+## 3.1 Overloading
+
+함수가 여러 개의 call signature를 가지고 있을 때 사용합니다.
+
+```tsx
+type Add = {
+  (a: number, b: number): number,
+  (a: number, b: string): number,
+}
+
+const add: Add = (a, b) => {
+  if (typeof b === "string") return a
+  return a + b
+}
+```
+
+패키지를 디자인할 때 아래와 같이 많이 사용합니다.
+
+```tsx
+type Config = {
+  path: string,
+  state: object
+}
+
+type Push = {
+  (path: string): void
+  (config: Config): void
+}
+
+const push: Push = (config) => {
+  if (typeof config === "string") console.log(config)
+  else {
+    console.log(config.path, config.state)
+  }
+};
+```
+
+call signature의 parameter개수가 다를경우에는?
+
+```tsx
+type Add = {
+  (a: number, b: number): number,
+  (a: number, b: number, c: number): number,
+}
+
+const add: Add = (a, b, c?: number) => {
+  return a + b
+}
+```
+
+자주보는 상황은 아닐겁니다.
