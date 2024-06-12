@@ -1238,3 +1238,9 @@ blockchain.getBlocks().push(new Block("fake", 100, "fake")); // Trying to hack
 console.log(blockchain.getBlocks());
 
 ```
+
+## 5.8 Conclusions
+
+이 강의는 아래 자료를 바탕으로 재해석한 것입니다.
+
+https://www.typescriptlang.org/docs/handbook/intro.html
