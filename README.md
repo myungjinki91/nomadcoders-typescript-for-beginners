@@ -511,3 +511,160 @@ dict.add(kimchi)
 dict.def("kimchi")
 
 ```
+
+## 4.2 Interfaces
+
+값은 공개하고 싶지만, 수정은 불가능하게 하고 싶다면? `readonly`
+
+```tsx
+class Word {
+  constructor(
+    public readonly term: string,
+    public readonly def: string,
+  ) {}
+}
+
+```
+
+JavaScript에 static이 있습니다. 그러면 Instance를 만들지 않고도 method를 호출할 수 있습니다.
+
+```
+class Hello {
+  static hello() {
+    return "hello"
+  }
+}
+
+Hello.hello()
+```
+
+지금까지 배운 type
+
+```tsx
+type Nickname = string
+type Health = number
+type Friends = Array<string>
+type Player = {
+  nickname: string,
+  healthBar: number,
+}
+
+const nico: Player = {
+  nickname: "nico",
+  healthBar: 10,
+}
+
+type Food = string
+
+const kimchi: Food = "delicious"
+```
+
+type에 특정 데이터만 오도록 제한할 수 있습니다.
+
+```tsx
+type Team = "red" | "blue" | "yellow"
+type Health = 1 | 5 | 10
+
+type Player = {
+  nickname: string,
+  team: Team,
+  health: Health
+}
+
+const nico: Player = {
+  nickname: "nico",
+  team: "yellow",
+  health: 1,
+}
+```
+
+인터페이스는 오브젝트의 모양을 알려줍니다.
+
+```tsx
+type Team = "red" | "blue" | "yellow"
+type Health = 1 | 5 | 10
+
+interface Player {
+  nickname: string,
+  team: Team,
+  health: Health,
+}
+
+const nico: Player = {
+  nickname: "nico",
+  team: "yellow",
+  health: 1,
+}
+```
+
+모양이 Type과 비슷하지만 살짝 다릅니다.
+
+```tsx
+type A = {
+}
+
+interface B {
+}
+```
+
+인터페이스는 오직 오브젝트의 모양을 설명할 때만 사용됩니다. 그래서 이런건 안됩니다.
+
+```tsx
+interface s = string // X
+```
+
+인터페이스는 클래스를 다루는 느낌이라 더 쉬울겁니다.
+
+```tsx
+interface User {
+  name: string
+}
+
+interface Player extends User {
+
+}
+
+const nico: Player = {
+  name: "nico"
+}
+```
+
+Type으로는 이렇게 만듭니다.
+
+```tsx
+type User = {
+  name: string
+}
+
+type Player = User & {
+
+}
+
+const nico: Player = {
+  name: "nico"
+}
+```
+
+Interface의 또 다른 특징은 Property를 누적할 수 있습니다.
+
+```tsx
+interface User {
+  name: string
+}
+
+interface User {
+  lastName: string
+}
+
+interface User {
+  health: number
+}
+
+const nico: User = {
+  name: "nico",
+  lastName: "n",
+  health: 1
+}
+```
+
+결론: 인터페이스는 OOP를 위해 만들어졌고, Type은 더 범용성있습니다.
