@@ -867,3 +867,9 @@ const booleanStorage = new LocalStorage<boolean>();
 booleanStorage.get("xxx")
 booleanStorage.set("hello", true)
 ```
+
+# 5 TYPESCRIPT BLOCKCHAIN
+
+## 5.0 Introduction
+
+이제 local 환경에서 TypeScript를 설치하고 사용해봅시다. 만약 ReactJS, NestJS, NextJS를 사용한다면 TypeScirpt를 직접 설치할 필요 없이 알아서 설치될겁니다. Webpack이 자동으로 설치되는 것처럼 말이죠.
