@@ -952,3 +952,18 @@ var Block = /** @class */ (function () {
 ```
 
 https://www.typescriptlang.org/tsconfig#target
+
+## 5.2 Lib Configuration
+
+lib은 TypeScript가 어느 환경에서 실행될지 알려주어야 합니다. 그래야 VSCode가 lib을 보고, 아? 너 DOM을 쓸거구나? 그럼 localstorage API Type을 준비해놓을게! 하고 자동완성을 해줍니다.
+
+```json
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES6",
+    "lib": ["ES6", "DOM"]
+  }
+}
+```
