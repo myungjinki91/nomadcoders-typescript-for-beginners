@@ -1068,3 +1068,76 @@ export function exit(code) {
 }
 
 ```
+
+## 5.5 Blocks
+
+`ts-node`는 개발 환경에서만 사용하는 패키지인데, 지금은 TypeScript로 작성된 파일을 JavaScript로 컴파일 한 결과물을 실행해야 합니다. 빌드하지 않고 실행하도록 도와주는 패키지입니다.
+
+`nodemon`은 파일 수정후 저장하는 순간 변경 사항을 바로 적용해주는 패키지입니다.
+
+```json
+{
+  "name": "typechain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "node build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
+
+```
+
+`esModuleInterop`은 CommonJS를 더 쉽게 사용하도록 만들어주는 옵션입니다.
+
+`module`은 Module System을 선택하는 옵션입니다. CommonJS말고도 UMD가 있습니다. 브라우저에서 코드를 실행한다면 UMD를 사용하는 경우가 많습니다.
+
+```json
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+  }
+}
+```
+
+블록체인을 만들어봅시다. 블록안에 데이터들이 블록끼리 사슬처럼 연결된 것이 블록체인입니다.
+
+```tsx
+import * as crypto from 'crypto';
+
+interface BlockShape {
+    hash: string;
+    prevHash: string;
+    height: number;
+    data: string;
+}
+
+class Block implements BlockShape {
+    public hash: string;
+    constructor(
+        public prevHash: string,
+        public height: number,
+        public data: string
+    ) {
+        this.hash = Block.calculateHash(prevHash, height, data);
+    }
+    static calculateHash(prevHash: string, height: number, data: string): string {
+        const toHsh = `${prevHash}${height}${data}`
+        return prevHash + height + data;
+    }
+}
+```
