@@ -291,3 +291,48 @@ Generic은 parameter의 위치를 기반으로 type을 추론합니다.
 ```tsx
 type SuperPrint = <T, M>(a: T[], b: M) => T
 ```
+
+## 3.4 Conclusions
+
+```tsx
+type Player<E> = {
+  name: string
+  extraInfo: E
+}
+
+type NicoExtra = {
+  favFood: string
+}
+
+type NicoPlayer = Player<NicoExtra>
+
+const nico: NicoPlayer = {
+  name: "nico",
+  extraInfo: {
+    favFood: "kimchi"
+  }
+}
+const lynn: Player<null> = {
+  name: "lynn",
+  extraInfo: null,
+}
+```
+
+아래 코드에서 A, B는 같은 꼴입니다. 보통 A를 많이 보게 될 것입니다.
+
+```tsx
+type A = Array<number>
+type B = number[]
+
+let a: A = [1, 2, 3, 4]
+```
+
+```tsx
+function printAllNumbers(arr: Array<number>){}
+```
+
+ReactJS에서는 아래와 같이 TypeScript를 적용합니다.
+
+```tsx
+useState<number>()
+```
