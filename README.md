@@ -446,3 +446,68 @@ nico.getFullName()
 - private: 해당 클래스에서만 사용가능하고 외부에서는 사용 불가는ㅇ
 - protected: 자식 클래스는 사용 가능
 - public: 모두 사용 가능
+
+## 4.1 Recap
+
+해시맵을 만들어봅시다. 그 전에 index signature란 걸 배워봅시다. `[key: string]: string`을 Index Signature라고 합니다. Property의 이름은 모르지만 Type은 알고 있을 때 사용합니다. 매우 중요합니다.
+
+```tsx
+type Words = {
+  [key: string]: string
+}
+
+let dict: Words = {
+  "apple": "food",
+  "banana": "food too",
+}
+
+```
+
+Class의 property를 수동으로 초기화하고 싶다면 아래와 같이 사용합니다.
+
+```tsx
+class Dict {
+  private words: Words
+  constructor() {
+    this.words = {}
+  }
+}
+```
+
+만든 단어장입니다. 특이한 점은 class도 Type으로 사용할 수 있습니다.
+
+```tsx
+type Words = {
+  [key: string]: string
+}
+
+class Dict {
+  private words: Words
+  constructor() {
+    this.words = {}
+  }
+  add(word: Word) {
+    if (this.words[word.term] === undefined) {
+      this.words[word.term] = word.def
+    }
+  }
+  def(term: string) {
+    return this.words[term]
+  }
+}
+
+class Word {
+  constructor(
+    public term: string,
+    public def: string,
+  ) {}
+}
+
+const kimchi = new Word("kimchi", "한국의 김치")
+
+const dict = new Dict()
+
+dict.add(kimchi)
+dict.def("kimchi")
+
+```
