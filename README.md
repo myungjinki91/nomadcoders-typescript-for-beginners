@@ -668,3 +668,106 @@ const nico: User = {
 ```
 
 결론: 인터페이스는 OOP를 위해 만들어졌고, Type은 더 범용성있습니다.
+
+## 4.3 Interfaces part Two
+
+Abstract class는 TypeScript에만 있는 기능이지만 꼭 기억해야할 내용은 JavaScript로 변환되면 Abstract Class는 Class가 됩니다.
+
+```tsx
+abstract class User {
+  constructor (
+    protected firstName: string,
+    protected lastName: string,
+  ) {}
+  abstract sayHi(name: string): string
+  abstract fullName(): string
+}
+
+class Player extends User {
+  fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+  sayHi(name: string) {
+    return `Hello ${name}. My name is ${this.fullName()}`
+  }
+}
+```
+
+그렇기 때문에 Interface를 사용합니다. Interface는 JavaScript로 변환되면 사라집니다.
+
+그리고 interface에서는 private, protect를 어떻게 사용할까요? abstract는 어떻게 사용할까요? 사용할 수 없습니다.
+
+```tsx
+interface User {
+  firstName: string,
+  lastName: string,
+  sayHi(name: string): string
+  fullName(): string
+}
+
+class Player implements User {
+  constructor(
+    public firstName: string,
+    public lastName: string,
+  ) {}
+  fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+  sayHi(name: string) {
+    return `Hello ${name}. My name is ${this.fullName()}`
+  }
+}
+```
+
+그리고 여러개의 interface를 상속받을 수 있습니다.
+
+```
+interface User {
+  firstName: string,
+  lastName: string,
+  sayHi(name: string): string
+  fullName(): string
+}
+
+interface Human {
+  health: number
+}
+
+class Player implements User, Human {
+  constructor(
+    public firstName: string,
+    public lastName: string,
+    public health: number
+  ) {}
+  fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+  sayHi(name: string) {
+    return `Hello ${name}. My name is ${this.fullName()}`
+  }
+}
+```
+
+extends: 상속
+
+implements: 다형성
+
+Interface도 type으로 사용될 수 있습니다.
+
+```tsx
+interface User {
+  firstName: string,
+  lastName: string,
+  sayHi(name: string): string
+  fullName(): string
+}
+
+function makeUser(user: User): User {
+  return {
+    firstName: "f",
+    lastName: "l",
+    sayHi: (name) => "",
+    fullName: () => "",
+  }
+}
+```
