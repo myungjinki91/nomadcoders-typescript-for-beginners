@@ -830,3 +830,40 @@ class UserB implements PlayerB {
 TypeScript 커뮤니티에서는 class, object의 꼴을 만들때 interface를 사용하고 나머지는 type을 사용하라고 합니다.
 
 Interface는 대부분의 경우 사용합니다. 더 직관적이거든요. Type Alias나, 특정 값으로 제한할 때는 type을 사용합니다.
+
+## 4.5 Polymorphism
+
+Generic은 concrete type이 아니라 placeholder type입니다.
+
+LocalStorage<T>를 SStorage<T>에서도 사용할 수 있습니다.
+
+```tsx
+interface SStorage<T> {
+  [key: string]: T
+}
+
+class LocalStorage<T> {
+  private storeage: SStorage<T> = {}
+  set(key: string, value: T) {
+    this.storeage[key] = value
+  }
+  remove(key: string) {
+    delete this.storeage[key]
+  }
+  get(key: string): T {
+    return this.storeage[key]
+  }
+  clear() {
+    this.storeage = {}
+  }
+}
+const stringsStorage = new LocalStorage<string>();
+
+stringsStorage.get("ket")
+stringsStorage.set("hello", "how are you")
+
+const booleanStorage = new LocalStorage<boolean>();
+
+booleanStorage.get("xxx")
+booleanStorage.set("hello", true)
+```
