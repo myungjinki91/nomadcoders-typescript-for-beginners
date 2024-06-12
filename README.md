@@ -1141,3 +1141,41 @@ class Block implements BlockShape {
     }
 }
 ```
+
+## 5.6 DefinitelyTyped
+
+TypeScript가 대중화되기 전의 JavaScript Package는 .d.ts 파일이 정의되어 있지 않습니다. 그런데 이런 패키지를 사용하고 싶다면 내가 만들 필요가 없죠? 멋있는 개발자분들이 이미 다 정의해놓았습니다.
+
+https://github.com/DefinitelyTyped/DefinitelyTyped에 말이죠.
+
+`npm i -D @types/node`
+
+위와 같이 설치하면 DefinitelyTyped에 있는 node폴더를 설치합니다. 이 node폴더 안에 crypto.d.ts가 정의되어 있답니다.
+
+```tsx
+import * as crypto from 'crypto';
+
+interface BlockShape {
+    hash: string;
+    prevHash: string;
+    height: number;
+    data: string;
+}
+
+class Block implements BlockShape {
+    public hash: string;
+    constructor(
+        public prevHash: string,
+        public height: number,
+        public data: string
+    ) {
+        this.hash = Block.calculateHash(prevHash, height, data);
+    }
+    static calculateHash(prevHash: string, height: number, data: string): string {
+        const toHsh = `${prevHash}${height}${data}`
+        return crypto.createHash('sha256').update(toHsh).digest('hex');
+    }
+}
+```
+
+지금까지 5~6년동안 TypeScript를 사용하면서 알게된 유용한 지식의 95%정도는 설명했습니다.
