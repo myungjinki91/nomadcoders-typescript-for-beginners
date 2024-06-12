@@ -873,3 +873,82 @@ booleanStorage.set("hello", true)
 ## 5.0 Introduction
 
 이제 local 환경에서 TypeScript를 설치하고 사용해봅시다. 만약 ReactJS, NestJS, NextJS를 사용한다면 TypeScirpt를 직접 설치할 필요 없이 알아서 설치될겁니다. Webpack이 자동으로 설치되는 것처럼 말이죠.
+
+## 5.1 Targets
+
+- npm init -y
+- npm i -D typescript
+- tsc --init
+
+```json
+{
+  "name": "typechain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
+
+```
+
+tsconfig.json이 있으면 VSCode가 인지하고 엄청난 기능을 제공합니다.
+
+tsconfig.json에 여러 옵션을 설정할 수 있습니다.
+
+- include: TypeScript 파일들이 어디에 위치해 있는지
+- outDir: TypeScript가 컴파일된 결과물이 어디에 저장될 지
+- target: TypeScript가 어떤 버전의 JavaScript로 컴파일 할지
+
+```json
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES5"
+  }
+}
+```
+
+아래와 같은 TypeScript는 ES5에서는 이렇게 변환됩니다.
+
+```tsx
+const hello = () => "hi";
+```
+
+```jsx
+var hello = function () { return "hi"; };
+```
+
+class도 해봅시다.
+
+```tsx
+class Block {
+    constructor(private data: string) {}
+    static hello() {
+        return "hi";
+    }
+}
+```
+
+```jsx
+var Block = /** @class */ (function () {
+    function Block(data) {
+        this.data = data;
+    }
+    Block.hello = function () {
+        return "hi";
+    };
+    return Block;
+}());
+
+```
+
+https://www.typescriptlang.org/tsconfig#target
