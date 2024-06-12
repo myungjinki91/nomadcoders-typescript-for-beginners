@@ -37,7 +37,7 @@ let c : number[] = []
 
 ?를 사용해 Optional로 Type을 지정할 수 있습니다.
 
-```
+```tsx
 const player : {
     name: string,
     age?: number,
