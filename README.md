@@ -1025,3 +1025,46 @@ declare module "myPackage" {
   function exit(code: number): number;
 }
 ```
+
+## 5.4 JSDoc
+
+`“allowJS”: true`를 하면 JavaScript 파일도 import할 수 있습니다. 그러면 TypeScript가 JavaScript를 자동으로 추론합니다.
+
+```json
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "strict": true,
+    "allowJs": true,
+  }
+}
+```
+
+JavaScript파일을 .ts로 바꾸기는 싫고, 그런데도 Type은 체크받고 싶다면, @ts-check와 JSDoc를 활용해봅시다.
+
+```jsx
+// @ts-check
+/**
+ * Initializes the project
+ * @param {object} config
+ * @param {boolean} config.debug
+ * @param {string} config.url
+ * @returns {boolean}
+ */
+export function init(config) {
+  return true;
+}
+
+/**
+ * Exits the program
+ * @param {number} code
+ * @returns {number}
+ */
+export function exit(code) {
+  return code + 1;
+}
+
+```
