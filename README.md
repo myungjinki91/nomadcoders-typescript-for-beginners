@@ -721,7 +721,7 @@ class Player implements User {
 
 그리고 여러개의 interface를 상속받을 수 있습니다.
 
-```
+```tsx
 interface User {
   firstName: string,
   lastName: string,
@@ -771,3 +771,62 @@ function makeUser(user: User): User {
   }
 }
 ```
+
+## 4.4 Recap
+
+type으로 상속하는 방법은 아래와 같습니다.
+
+```tsx
+type PlayerA = {
+  name: string
+}
+
+type PlayerAA = PlayerA & {
+  lastName: string
+}
+
+const playerA: PlayerAA = {
+  name: "n",
+  lastName: "l",
+}
+```
+
+interface에서 상속하는 방법은 그냥 같은 interface를 여러번 사용하면 됩니다. 아주 중요합니다.
+
+```tsx
+interface A {
+  name: string
+}
+
+interface A {
+  lastName: string
+}
+```
+
+type, interface모두 implements를 사용할 수 있습니다.
+
+```tsx
+type PlayerA = {
+  firstName :string  
+}
+
+interface PlayerB {
+  firstName :string
+}
+
+class UserA implements PlayerA {
+  constructor (
+    public firstName: string
+  ) {}
+}
+
+class UserB implements PlayerB {
+  constructor (
+    public firstName: string
+  ) {}
+}
+```
+
+TypeScript 커뮤니티에서는 class, object의 꼴을 만들때 interface를 사용하고 나머지는 type을 사용하라고 합니다.
+
+Interface는 대부분의 경우 사용합니다. 더 직관적이거든요. Type Alias나, 특정 값으로 제한할 때는 type을 사용합니다.
