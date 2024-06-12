@@ -336,3 +336,113 @@ ReactJS에서는 아래와 같이 TypeScript를 적용합니다.
 ```tsx
 useState<number>()
 ```
+
+# 4 CLASSES AND INTERFACES
+
+## 4.0 Classes
+
+TypeScript로 객체지향코드를 만들어봅시다. 굳이 this를 사용하지 않아도 자동으로 만들어줍니다.
+
+- TypeScript
+
+```tsx
+class Player {
+  constructor (
+    private firstName: string,
+    private lastName: string
+  ) {}
+}
+```
+
+- JavaScript
+
+```tsx
+"use strict";
+class Player {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}
+```
+
+JavaScript에는 없지만 TypeScript에는 private, protected, public이 있습니다. 아래 코드에서 firstName은 접근할 수 없습니다. 다만 JavaScript에서는 가능합니다. 왜냐하면 JavaScript에는 private, protected, public기능이 없기 때문이죠.
+
+```tsx
+const nico = new Player("nico", "las", "니꼬");
+
+nico.firstName // X
+nico.nickname // O
+```
+
+다음으로 알아볼 것은 Abstract Class입니다. 아주 근사한 기능입니다.
+
+```tsx
+abstract class User {
+  constructor (
+      private firstName: string,
+      private lastName: string,
+      public nickname: string,
+    ) {}
+}
+
+class Player extends User {
+  
+}
+
+const nico = new Player("nico", "las", "니꼬");
+```
+
+method에도 접근지정자가 가능합니다. getFullName()에 private를 적용해 봅시다.
+
+```tsx
+abstract class User {
+  constructor (
+      private firstName: string,
+      private lastName: string,
+      public nickname: string,
+    ) {}
+
+  private getFullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+class Player extends User {
+  
+}
+
+const nico = new Player("nico", "las", "니꼬");
+nico.getFullName() // X
+```
+
+추상 메소드도 가능합니다.
+
+```tsx
+abstract class User {
+  constructor (
+      protected firstName: string,
+      protected lastName: string,
+      protected nickname: string,
+    ) {}
+
+  abstract getNickName(): void
+
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+class Player extends User {
+  getNickName() {
+    console.log(this.nickname)
+  }
+}
+
+const nico = new Player("nico", "las", "니꼬");
+nico.getFullName()
+```
+
+- private: 해당 클래스에서만 사용가능하고 외부에서는 사용 불가는ㅇ
+- protected: 자식 클래스는 사용 가능
+- public: 모두 사용 가능
