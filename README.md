@@ -266,3 +266,28 @@ superPrint(["a", "b", "c"])
 ```
 
 Generic이 Polymorphism을 지원하기 위해 만들어졌습니다.
+
+## 3.3 Generics Recap
+
+Generic은 아래와 같이 사용할 수 있습니다.
+
+```tsx
+type SuperPrint = <T>(a: T[]) => T
+
+const superPrint: SuperPrint = (a) => a[0]
+
+const a = superPrint([1,2, 3, 4])
+const b = superPrint([true, true, true])
+const c = superPrint(["a", "b", "c"])
+const d = superPrint([1, 2, true, false, "hello"])
+```
+
+그냥 any를 사용하면 안되나요? 네 안됩니다! any로는 Type을 추론할 수 없습니다.
+
+generic은 요구한대로 call signature을 만들어준다고 이해하시면 됩니다.
+
+Generic은 parameter의 위치를 기반으로 type을 추론합니다.
+
+```tsx
+type SuperPrint = <T, M>(a: T[], b: M) => T
+```
