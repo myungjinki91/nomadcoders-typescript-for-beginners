@@ -967,3 +967,61 @@ lib은 TypeScript가 어느 환경에서 실행될지 알려주어야 합니다.
   }
 }
 ```
+
+## 5.3 Declaration Files
+
+JavaScript로 만들어진 라이브러리를 TypeScript에 쓰려고 하면 TypeScript는 그 라이브러리에 대해 알 길이 없습니다.
+
+tsconfig.json에서 strict는 TypeScript가 더 깐깐하게 체크한다는 뜻입니다.
+
+```json
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "strict": true,
+  }
+}
+```
+
+아래와 같은 JavaScript 패키지가 있다고 생각해봅시다.
+
+```tsx
+export function init(config) {
+  return true;
+}
+
+export function exit(code) {
+  return code + 1;
+}
+
+```
+
+위 패키지를 불러오면 아래에서 오류가 발생합니다. init, exit에 대한 TypeScript가 정의되어있지 않거든요.
+
+```tsx
+import {init, exit} from "myPackage"
+
+init({
+    url: "https://example.com"
+})
+
+exit(1)
+
+localStorage.clear()
+```
+
+그때  .d.ts파일이 필요합니다.
+
+```tsx
+	interface Config {
+    url: string;
+}
+
+declare module "myPackage" {
+  function init(config: Config): boolean;
+  function exit(code: number): number;
+}
+```
