@@ -1179,3 +1179,62 @@ class Block implements BlockShape {
 ```
 
 지금까지 5~6년동안 TypeScript를 사용하면서 알게된 유용한 지식의 95%정도는 설명했습니다.
+
+## 5.7 Chain
+
+```tsx
+import * as crypto from 'crypto';
+
+interface BlockShape {
+    hash: string;
+    prevHash: string;
+    height: number;
+    data: string;
+}
+
+class Block implements BlockShape {
+    public hash: string;
+    constructor(
+        public prevHash: string,
+        public height: number,
+        public data: string
+    ) {
+        this.hash = Block.calculateHash(prevHash, height, data);
+    }
+    static calculateHash(prevHash: string, height: number, data: string): string {
+        const toHsh = `${prevHash}${height}${data}`
+        return crypto.createHash('sha256').update(toHsh).digest('hex');
+    }
+}
+
+class Blockchain {
+    private blocks: Block[];
+    constructor() {
+        this.blocks = [];
+    }
+
+    private getPrevHash() {
+        if (this.blocks.length === 0) return "";
+        return this.blocks[this.blocks.length - 1].hash;
+    }
+    public addBlock(data:string) {
+        const newBlock = new Block(this.getPrevHash(), this.blocks.length + 1, data);
+        this.blocks.push(newBlock);
+    }
+    public getBlocks() {
+        return [...this.blocks]; // Solution
+    }
+}
+
+const blockchain = new Blockchain();
+
+blockchain.addBlock("First one");
+blockchain.addBlock("Second one");
+blockchain.addBlock("Third one");
+blockchain.addBlock("Fourth block");
+
+blockchain.getBlocks().push(new Block("fake", 100, "fake")); // Trying to hack
+
+console.log(blockchain.getBlocks());
+
+```
